@@ -9,7 +9,8 @@ from typing import Dict, Optional, Any, Union, Tuple
 import lxml.etree
 import pandas as pd
 import dateutil.parser as dp
-
+from pandas.io.pytables import format_doc
+#pd.set_option('display.max_rows', None)
 
 NAMESPACES = {
     'ns': 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
@@ -75,7 +76,6 @@ def get_tcx_point_data(point: lxml.etree._Element) -> Optional[Dict[str, Union[f
     else:
         data['latitude'] = float(position.find('ns:LatitudeDegrees', NAMESPACES).text)
         data['longitude'] = float(position.find('ns:LongitudeDegrees', NAMESPACES).text)
-    
     time_str = point.find('ns:Time', NAMESPACES).text
     data['time'] = dp.parse(time_str)
         
@@ -137,7 +137,17 @@ def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     
     return laps_df, points_df
 
-
+def getLatLong(fname):
+    laps_df, points_df = get_dataframes(fname)
+    df_no_indicies = points_df[['latitude','longitude']].to_string(index=False).replace('   ',',')
+    print(df_no_indicies)
+    
+#def toExcel(fname):
+#    laps_df, points_df = get_dataframes(fname)
+#    formatted_df = points_df['time'].pd.
+#    formatted_df = points_df['time'].dt.tz_localize(None)
+#    print(formatted_df)
+#    formatted_df.to_excel("data.xlsx",sheet_name='xcldaten2')
 def printData(fname):
     laps_df, points_df = get_dataframes(fname)
     print('LAPS:')
@@ -145,4 +155,3 @@ def printData(fname):
     print('\nPOINTS:')
     print(points_df)
 
-printData
