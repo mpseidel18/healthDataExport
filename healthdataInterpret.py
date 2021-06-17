@@ -10,7 +10,7 @@ import lxml.etree
 import pandas as pd
 import dateutil.parser as dp
 from pandas.io.pytables import format_doc
-#pd.set_option('display.max_rows', None)
+pd.set_option('display.max_rows', None)
 
 NAMESPACES = {
     'ns': 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
@@ -150,8 +150,9 @@ def getLatLong(fname):
 #    formatted_df.to_excel("data.xlsx",sheet_name='xcldaten2')
 def printData(fname):
     laps_df, points_df = get_dataframes(fname)
-    print('LAPS:')
-    print(laps_df)
-    print('\nPOINTS:')
-    print(points_df)
+    # print('LAPS:')
+    # print(laps_df)
+    # print('\nPOINTS:')
+    # print(points_df)
+    return "LAPS:" + "\n" + str(laps_df) + "\n" + "POINTS:" + "\n" + str(points_df) +"\n"
 
