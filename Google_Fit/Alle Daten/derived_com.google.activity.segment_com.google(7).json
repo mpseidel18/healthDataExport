@@ -1,0 +1,6 @@
+{
+    "Data Source": "derived:com.google.activity.segment:com.google.android.gms:session_activity_segment",
+    "Data Points": [
+        {"fitValue":[{"value":{"intVal":7}}],"originDataSourceId":"derived:com.google.activity.segment:com.google.android.apps.fitness:session_activity_segment","endTimeNanos":1623311141221000000,"dataTypeName":"com.google.activity.segment","startTimeNanos":1623309830038000000,"modifiedTimeMillis":1623311279061,"rawTimestampNanos":0}
+    ]
+}

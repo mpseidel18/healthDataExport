@@ -1,0 +1,9 @@
+{
+    "Data Source": "derived:com.google.step_count.delta:com.google.android.fit:samsung:SM-A405FN:e10540d43b4ddde5:top_level",
+    "Data Points": [
+        {"fitValue":[{"value":{"intVal":12}}],"originDataSourceId":"derived:com.google.step_count.cumulative:com.google.android.gms:samsung:SM-A405FN:e10540d43b4ddde5:soft_step_counter","endTimeNanos":1622488053419000000,"dataTypeName":"com.google.step_count.delta","startTimeNanos":1622487993419000000,"modifiedTimeMillis":1622541605126,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":19}}],"originDataSourceId":"derived:com.google.step_count.cumulative:com.google.android.gms:samsung:SM-A405FN:e10540d43b4ddde5:soft_step_counter","endTimeNanos":1622828691190000000,"dataTypeName":"com.google.step_count.delta","startTimeNanos":1622828631190000000,"modifiedTimeMillis":1622828789048,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":19}}],"originDataSourceId":"derived:com.google.step_count.cumulative:com.google.android.gms:samsung:SM-A405FN:e10540d43b4ddde5:soft_step_counter","endTimeNanos":1622893716439000000,"dataTypeName":"com.google.step_count.delta","startTimeNanos":1622893656439000000,"modifiedTimeMillis":1622893737486,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":1}}],"originDataSourceId":"derived:com.google.step_count.cumulative:com.google.android.gms:samsung:SM-A405FN:e10540d43b4ddde5:soft_step_counter","endTimeNanos":1622893724994938000,"dataTypeName":"com.google.step_count.delta","startTimeNanos":1622893716439000000,"modifiedTimeMillis":1622914939335,"rawTimestampNanos":0}
+    ]
+}

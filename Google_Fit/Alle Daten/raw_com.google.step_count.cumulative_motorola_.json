@@ -1,0 +1,11 @@
+{
+    "Data Source": "raw:com.google.step_count.cumulative:motorola:moto g(8) plus:463d7b5b7ec52afa:pedometer  Non-wakeup",
+    "Data Points": [
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1621963460199172850,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1621963336711000000,"modifiedTimeMillis":1621963640734,"rawTimestampNanos":123488172850},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1621964077485774749,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1621964018917000000,"modifiedTimeMillis":1621968047426,"rawTimestampNanos":58568774749},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622122333744344310,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622122285765000000,"modifiedTimeMillis":1622122405443,"rawTimestampNanos":47979344310},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622171078207000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622122285765000000,"modifiedTimeMillis":1622192001463,"rawTimestampNanos":47979344310},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622243316547000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622122285765000000,"modifiedTimeMillis":1622244139686,"rawTimestampNanos":47979344310},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622368890573495693,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622368856715000000,"modifiedTimeMillis":1622373476588,"rawTimestampNanos":33858495693}
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "Data Source": "derived:com.google.step_count.cumulative:com.google.android.gms:samsung:SM-A405FN:e10540d43b4ddde5:soft_step_counter",
+    "Data Points": [
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1621960696467000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1621960478389000000,"modifiedTimeMillis":1621961376724,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622238801229000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622238713410000000,"modifiedTimeMillis":1622238946054,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622239543859000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622239541618000000,"modifiedTimeMillis":1622244386968,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622239634461000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622239632946000000,"modifiedTimeMillis":1622244386968,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622244951777000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622244949708000000,"modifiedTimeMillis":1622249483182,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622245867953000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622245865595000000,"modifiedTimeMillis":1622249483182,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622369649078000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622369646883000000,"modifiedTimeMillis":1622369760674,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622480576379000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622480569596000000,"modifiedTimeMillis":1622480732321,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622484240424000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622484233660000000,"modifiedTimeMillis":1622484361429,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":12}}],"originDataSourceId":"","endTimeNanos":1622488053419000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622484233660000000,"modifiedTimeMillis":1622541605126,"rawTimestampNanos":3940765054389},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622491228264000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622491226531000000,"modifiedTimeMillis":1622541605126,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622541499384000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622541497610000000,"modifiedTimeMillis":1622541605126,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622738234410000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622738232057000000,"modifiedTimeMillis":1622738411676,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":19}}],"originDataSourceId":"","endTimeNanos":1622828691190000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622738232057000000,"modifiedTimeMillis":1622828789048,"rawTimestampNanos":90595358444000},
+        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622828801004000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622828795811000000,"modifiedTimeMillis":1622872461856,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":19}}],"originDataSourceId":"","endTimeNanos":1622893716439000000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622828795811000000,"modifiedTimeMillis":1622893737486,"rawTimestampNanos":155620531706000},
+        {"fitValue":[{"value":{"intVal":20}}],"originDataSourceId":"","endTimeNanos":1622893724994938000,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622828795811000000,"modifiedTimeMillis":1622893737486,"rawTimestampNanos":155632369272000}
+    ]
+}

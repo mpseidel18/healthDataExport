@@ -1,0 +1,7 @@
+{
+    "Data Source": "raw:com.google.activity.segment:com.google.android.apps.fitness:user_input",
+    "Data Points": [
+        {"fitValue":[{"value":{"intVal":3}}],"originDataSourceId":"","endTimeNanos":1623310746009000000,"dataTypeName":"com.google.activity.segment","startTimeNanos":1623310305951000000,"modifiedTimeMillis":1623311278381,"rawTimestampNanos":0},
+        {"fitValue":[{"value":{"intVal":3}}],"originDataSourceId":"","endTimeNanos":1623311141221000000,"dataTypeName":"com.google.activity.segment","startTimeNanos":1623311140399000000,"modifiedTimeMillis":1623311279048,"rawTimestampNanos":0}
+    ]
+}

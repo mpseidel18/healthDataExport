@@ -1,0 +1,4 @@
+{
+    "Data Source": "derived:com.google.step_count.delta:com.google.android.gms:Mobvoi:TicWatch Pro:f6825ca82ac8eb2f:derive_step_deltas<-raw:com.google.step_count.cumulative:Mobvoi:TicWatch Pro:f6825ca82ac8eb2f:Step Counter",
+    "Data Points": []
+}

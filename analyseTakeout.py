@@ -1,13 +1,14 @@
 import click
 import os
-from healthdataInterpret import * 
+from tcxAnalyse import * 
 
 @click.command()
-@click.option('--path')
+@click.option('--path',type=click.Path(exists=True))
 def hello(path):
     d = path
     for path in os.listdir(d):
         full_path = os.path.join(d, path)
+        print(full_path)
         output = printData(full_path)
         print(output)
         f = open("myfile.txt", "a")
