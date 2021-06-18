@@ -17,6 +17,7 @@ def getLatLong(fname):
 
 #JSON
 def convertJson2xlsx(fname):
+    print("Fetching Files...")
     for jsonfile in glob.glob(os.path.join(fname, '*.json')):
         df_json = pd.read_json(jsonfile, orient='index')
         df_json.transpose()
@@ -24,6 +25,7 @@ def convertJson2xlsx(fname):
 
 # CSV
 def convertCsv2Xlsx(fname):
+    print("Fetching Files...")
     for csvfile in glob.glob(os.path.join(fname, '*.csv')):
         print(csv)
         workbook = Workbook(csvfile[:-4] + '.xlsx')
@@ -37,7 +39,7 @@ def convertCsv2Xlsx(fname):
 #TCX
 #analyszeTakout --tcx --txtdata [path_to_dir] 
 def getTCXDataToTxt(fname):
-    print("Starting to read the Path...")
+    print("Fetching Files...")
     for tcxfile in glob.glob(os.path.join(fname, '*.tcx')):
         output = printData(tcxfile)
         f = open(str(tcxfile) +'.txt' , "a")
@@ -52,6 +54,7 @@ def getTCXDataToTxt(fname):
 #         f.close
 #analyszeTakout --tcx --csvgpslist [path_to_dir] 
 def getLatLongInCsv(fname):
+    print("Fetching Files...")
     print("Creating .csv file from the files in selected folder. \nImport these files to Google MyMaps to get an overview of the locations")
     laps_df, points_df = get_dataframes(fname)
     df_no_indicies = points_df[['time','latitude','longitude','elevation']].to_csv(r'.\Exports\out.csv',index=False,header=True)
