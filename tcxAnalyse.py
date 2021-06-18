@@ -140,19 +140,7 @@ def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
 def getLatLong(fname):
     laps_df, points_df = get_dataframes(fname)
     df_no_indicies = points_df[['latitude','longitude']].to_string(index=False).replace('   ',',')
-    print(df_no_indicies)
-    
-#def toExcel(fname):
-#    laps_df, points_df = get_dataframes(fname)
-#    formatted_df = points_df['time'].pd.
-#    formatted_df = points_df['time'].dt.tz_localize(None)
-#    print(formatted_df)
-#    formatted_df.to_excel("data.xlsx",sheet_name='xcldaten2')
+    return(df_no_indicies)
 def printData(fname):
     laps_df, points_df = get_dataframes(fname)
-    # print('LAPS:')
-    # print(laps_df)
-    # print('\nPOINTS:')
-    # print(points_df)
     return "LAPS:" + "\n" + str(laps_df) + "\n" + "POINTS:" + "\n" + str(points_df) +"\n"
-
