@@ -12,21 +12,28 @@ def getPathofTargetDir(path):
             arr.append(full_path)
     return arr
 
-def convertJson2xlsx(importPath, exportPath):
-    array = getPathofTargetDir("Google_Fit\Alle Sitzungen")
-    df_json = pd.read_json('Google_Fit\Alle Sitzungen\\2021-06-09T13_36_25+02_00_WALKING.json')
-    print(df_json)
-    df_json.to_excel('Exports/data2.xlsx')
+def convertJson2xlsx(importPath):
+        count = 1
+        array = getPathofTargetDir(importPath)
+        print(len(array))
+        # if not os.path.exists('autoExport'):
+        #     os.makedirs('autoExport')
+        for i in array:
+            print("Nr. " + str(count) + ":" + "\n" + i)
+            df_json = pd.read_json(i, orient='index')
+            df_json.transpose()
+            df_json.to_excel (str(i) +'.xlsx' )
+            count += 1
 
 def convertCsv2Xlsx(importPath):
         count = 1
         array = getPathofTargetDir(importPath)
-        print(array)
         if not os.path.exists('autoExport'):
             os.makedirs('autoExport')
         for i in array:
-            read_file = pd.read_csv (i)
-            read_file.to_excel ('.\\autoExport' + '\\1' + '.xlsx' )
+            print("Nr. " + str(count) + ":" + "\n" + i)
+            df_csv = pd.read_csv(i)
+            df_csv.to_excel (str(i) +'.xlsx' )
             count += 1
 
 def getTCXDataToTxt(path, pathToFile):
@@ -36,5 +43,7 @@ def getTCXDataToTxt(path, pathToFile):
         f = open(pathToFile, "a")
         f.write(output)
         f.close
-# getTCXDataToTxt("Google_Fit\Aktivitäten","tcxDaten.txt")
-convertCsv2Xlsx("Google_Fit/Aktivitäten/")
+convertJson2xlsx("Google_Fit/Alle Sitzungen/")
+convertJson2xlsx("Google_Fit/Alle Daten")
+convertCsv2Xlsx("Google_Fit/Tägliche Aktivitätswerte")
+getTCXDataToTxt("Google_Fit\Aktivitäten","Google_Fit/Aktivitäten/Data.txt")
