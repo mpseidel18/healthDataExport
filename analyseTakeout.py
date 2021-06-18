@@ -11,14 +11,7 @@ group.add_argument("-jx", "--convertj2x", help="Converts .json to .xlsx files", 
 
 parser.add_argument("pathToDir", type=str, help="Path to the target directory. The tool always tries to fetch all files of given type.")
 args = parser.parse_args()
-# answer = args.x**args.y
 
-# if args.quiet:
-#     print(answer)
-# elif args.verbose:
-#     print("{} to the power {} equals {}".format(args.x, args.y, answer))
-# else:
-#     print("{}^{} == {}".format(args.x, args.y, answer))
 if args.csvgpslist:
     getLatLongInCsv(args.pathToDir)
 elif args.c2txt:
