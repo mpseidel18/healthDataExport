@@ -1,4 +1,0 @@
-{
-    "Data Source": "derived:com.google.step_count.delta:com.google.android.gms:motorola:moto g(8) plus:463d7b5b7ec52afa:derive_step_deltas<-raw:com.google.step_count.cumulative:motorola:moto g(8) plus:463d7b5b7ec52afa:pedometer  Non-wakeup",
-    "Data Points": []
-}

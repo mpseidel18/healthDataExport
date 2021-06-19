@@ -1,7 +1,0 @@
-{
-    "Data Source": "raw:com.google.step_count.cumulative:Mobvoi:TicWatch Pro:f6825ca82ac8eb2f:Step Counter",
-    "Data Points": [
-        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622243608185446293,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622243497612000000,"modifiedTimeMillis":1622376903745,"rawTimestampNanos":110573446293},
-        {"fitValue":[{"value":{"intVal":0}}],"originDataSourceId":"","endTimeNanos":1622371211523069561,"dataTypeName":"com.google.step_count.cumulative","startTimeNanos":1622371104744000000,"modifiedTimeMillis":1622376903745,"rawTimestampNanos":106779069561}
-    ]
-}

@@ -1,6 +1,0 @@
-{
-    "Data Source": "derived:com.google.weight:com.google.android.gms:merge_weight",
-    "Data Points": [
-        {"fitValue":[{"value":{"fpVal":77}}],"originDataSourceId":"raw:com.google.weight:com.google.android.apps.fitness:user_input","endTimeNanos":1623163843990000000,"dataTypeName":"com.google.weight","startTimeNanos":1623163843990000000,"modifiedTimeMillis":1623163873030,"rawTimestampNanos":0}
-    ]
-}
