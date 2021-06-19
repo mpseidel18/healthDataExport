@@ -4,9 +4,9 @@ from pandas.io import json
 from tcxAnalyse import *
 from glob import glob
 import csv
-from xlsxwriter.workbook import Workbook
+from xlsxwriter.workbook import Workbook #Mehrere Imports
+FILETYPES = ['tcx', 'json', 'xlsx','csv']
 
-#MISC
 def printData(fname):
     laps_df, points_df = get_dataframes(fname)
     return "LAPS:" + "\n" + str(laps_df) + "\n" + "POINTS:" + "\n" + str(points_df) +"\n"
@@ -14,22 +14,22 @@ def getLatLong(fname):
     laps_df, points_df = get_dataframes(fname)
     df_no_indicies = points_df[['latitude','longitude']].to_string(index=False).replace('   ',',')
     return(df_no_indicies)
-def getFilesReursive(fname, filetype):
+def getFilesRecursive(fname, filetype):
     return [y for x in os.walk(fname) for y in glob(os.path.join(x[0], '*.' + str(filetype) ))]
 
-#JSON
-def convertJson2xlsx(fname, filetype):
+def convertJson2xlsx(fname):
     print("Fetching Files...")
-    for jsonfile in getFilesReursive(fname, filetype):
+    for jsonfile in getFilesRecursive(fname, "json"):
+        print(jsonfile)
         df_json = pd.read_json(jsonfile, orient='index')
         df_json.transpose()
         df_json.to_excel (str(jsonfile) +'.xlsx' )
 
-# CSV
-def convertCsv2Xlsx(fname, filetype):
+
+def convertCsv2Xlsx(fname):
     print("Fetching Files...")
-    for csvfile in getFilesReursive(fname, filetype):
-        print(csv)
+    for csvfile in getFilesRecursive(fname, "csv"):
+        print(csvfile)
         workbook = Workbook(csvfile[:-4] + '.xlsx')
         worksheet = workbook.add_worksheet()
         with open(csvfile, 'rt', encoding='utf8') as f:
@@ -38,35 +38,32 @@ def convertCsv2Xlsx(fname, filetype):
                 for c, col in enumerate(row):
                     worksheet.write(r, c, col)
         workbook.close()
-#TCX
-#analyszeTakout --tcx --txtdata [path_to_dir] 
-def getTCXDataToTxt(fname, filetype):
+def getTCXDataToTxt(fname):
     print("Fetching Files...")
-    for tcxfile in getFilesReursive(fname, filetype):
+    for tcxfile in getFilesRecursive(fname, "tcx"):
         output = printData(tcxfile)
         f = open(str(tcxfile) +'.txt' , "a")
         f.write(output)
         f.close
     print("Done. Your files are in the folder you've set as args")
-# def getTcxGpsList(fname):
-#     for tcxfile in glob.glob(os.path.join(fname, '*.tcx')):
-#         output = getLatLong(tcxfile)
-#         f = open(str(tcxfile) + '-gps-' + '.txt' , "a")
-#         f.write(output)
-#         f.close
-#analyszeTakout --tcx --csvgpslist [path_to_dir] 
+
 def getLatLongInCsv(fname):
     print("Fetching Files...")
     print("Creating .csv file from the files in selected folder. \nImport these files to Google MyMaps to get an overview of the locations")
-    laps_df, points_df = get_dataframes(fname)
-    df_no_indicies = points_df[['time','latitude','longitude','elevation']].to_csv(r'.\Exports\out.csv',index=False,header=True)
-    print("Done.")
-# getLatLongInCsv("Google_Fit/Aktivitäten/2021-06-10T09_23_50+02_00_PT14M30.303S_Gehen.tcx")
+    for tcxfile in getFilesRecursive(fname, "tcx"):
+        print(tcxfile)
+        laps_df, points_df = get_dataframes(tcxfile)
+        df_no_indicies = points_df[['time','latitude','longitude','elevation']].to_csv(str(tcxfile) +'.csv',index=False,header=True)
+        print(df_no_indicies)
 
-#TO-DO: TCX TO CSV
-# convertJson2xlsx("Google_Fit/Alle Sitzungen/")
-# convertJson2xlsx("Google_Fit/Alle Daten")
-# convertCsv2Xlsx(r"Google_Fit")
-# getTCXDataToTxt("Google_Fit", "tcx")
-# getTcxGpsList("Google_Fit/Aktivitäten")
-# getLatLongInCsv(r"Google_Fit\Aktivitäten\2021-06-10T09_23_50+02_00_PT14M30.303S_Gehen.tcx")
+def analyzeHealthData(PATH):
+    for extension in FILETYPES:
+        if extension == 'tcx':
+            getTCXDataToTxt(PATH)
+        if extension == 'json':
+            convertJson2xlsx(PATH)
+        if extension == 'csv':
+            convertCsv2Xlsx(PATH)
+
+        # points_df = get_dataframes(tcxfile)
+        # points_df[['time','latitude','longitude','elevation']].to_csv(str(tcxfile) +'.csv',index=False,header=True)

@@ -140,6 +140,7 @@ def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
 def getLatLong(fname):
     laps_df, points_df = get_dataframes(fname)
     df_no_indicies = points_df[['latitude','longitude']].to_string(index=False).replace('   ',',')
+    print(df_no_indicies)
     return(df_no_indicies)
 def printData(fname):
     laps_df, points_df = get_dataframes(fname)
