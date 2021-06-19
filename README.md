@@ -25,3 +25,5 @@ Feel free to try the converts on other vendors or formats!
 ## Known Bugs
 - I tried this tool on various other exported vendors, but most of the time the `json`to `xlsx` convert does not work well. It works best on   the `json` Google Takout produces.
 - Sometimes the path which is given doesn't get inserted in the functions quite well.
+
+Big thanks to https://github.com/bunburya/fitness_tracker_data_parsing for the tcx parser!
