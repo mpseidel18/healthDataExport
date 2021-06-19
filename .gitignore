@@ -1,2 +1,5 @@
-Google_Fit
+Google_Fit/
+Exports/*
+autoExport/
 __pycache__/
+test.py
