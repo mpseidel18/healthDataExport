@@ -1,8 +1,0 @@
-LAPS:
-                             start_time    distance             total_time  max_speed  max_hr  avg_hr
-number                                                                                               
-1      2021-06-09 12:44:55.481000+00:00  947.769341 0 days 00:11:27.125000        NaN     NaN     NaN
-POINTS:
-Empty DataFrame
-Columns: [latitude, longitude, elevation, time, heart_rate, cadence, speed, lap]
-Index: []

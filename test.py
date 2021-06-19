@@ -1,15 +1,25 @@
+from tcxAnalyse import *
 import os
-import glob
-import csv
-from xlsxwriter.workbook import Workbook
+from glob import glob
+FILETYPES = ['.tcx', '.json', '.xlsx','.csv', '.lol']
 
-
-for csvfile in glob.glob(os.path.join('Google_Fit/Tägliche Aktivitätswerte/', '*.csv')):
-    workbook = Workbook(csvfile[:-4] + '.xlsx')
-    worksheet = workbook.add_worksheet()
-    with open(csvfile, 'rt', encoding='utf8') as f:
-        reader = csv.reader(f)
-        for r, row in enumerate(reader):
-            for c, col in enumerate(row):
-                worksheet.write(r, c, col)
-    workbook.close()
+def analyzeHealthData():
+    for extension in FILETYPES:
+        PATH = r"C:\Users\Marius\progammiern\healthdatatInterpret\Google_Fit"
+        result = [y for x in os.walk(PATH) for y in glob(os.path.join(x[0], '*' + extension ))]
+        if not result:
+            print("No files match " + extension)
+        if extension == '.tcx':
+            print("Fetching Files...")
+            for tcxfile in result:
+                output = printData(tcxfile)
+                f = open(str(tcxfile) +'.txt' , "a")
+                f.write(output)
+                f.close
+                points_df = get_dataframes(tcxfile)
+                points_df[['time','latitude','longitude','elevation']].to_csv(r'.\Exports\out.csv',index=False,header=True)
+            print("Done.")
+        if extension == '.json':
+            pass
+        if extension == '.csv':
+            pass
