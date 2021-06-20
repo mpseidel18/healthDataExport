@@ -4,7 +4,10 @@ from pandas.io import json
 from tcxAnalyse import *
 from glob import glob
 import csv
-from xlsxwriter.workbook import Workbook #Mehrere Imports
+from xlsxwriter.workbook import Workbook
+import sqlite3 #Mehrere Imports
+import numpy as np
+from pathlib import Path
 FILETYPES = ['tcx', 'json', 'xlsx','csv']
 
 def printData(fname):
@@ -65,5 +68,14 @@ def analyzeHealthData(PATH):
         if extension == 'csv':
             convertCsv2Xlsx(PATH)
 
-        # points_df = get_dataframes(tcxfile)
-        # points_df[['time','latitude','longitude','elevation']].to_csv(str(tcxfile) +'.csv',index=False,header=True)
+def exportSqlite(PATH):
+    database = sqlite3.connect(PATH)
+    df = pd.read_sql_query("SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;", database)
+    nparray= df["name"].to_numpy()
+    convertDatabase = sqlite3.connect(PATH)
+    dbname = os.path.splitext(os.path.basename(PATH))[0]
+    print(dbname)
+    Path("DatabaseExports/"+ dbname + "/").mkdir(parents=True, exist_ok=True)
+    for x in nparray:
+        exportedTable = pd.read_sql_query("SELECT * from " + x + ";", convertDatabase)
+        exportedTable.to_excel ("DatabaseExports/" + dbname + "/" + str(x) +'.xlsx' )

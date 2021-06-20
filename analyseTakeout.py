@@ -8,6 +8,7 @@ group.add_argument("-cl", "--csvgpslist", help="Exports the Lat/Long Data in fro
 group.add_argument("-cx", "--convertc2x", help="Converts .csv to .xlsx files.", action="store_true")
 group.add_argument("-jx", "--convertj2x", help="Converts .json to .xlsx files.", action="store_true")
 group.add_argument("-a", "--automatic", help="analyzes the full tree recursivly and trys to convert the data in readbale Data.", action="store_true")
+group.add_argument("-db", "--database", help="Exports tables from a target Database. The Database must contain sqlite_schema. \n You need to specify the whole path to the databse!", action="store_true")
 
 parser.add_argument("pathToDir", type=str, help="Path to the target directory.") #Argument "pathToDir" hinzufügen.
 args = parser.parse_args() 
@@ -22,3 +23,5 @@ elif args.convertj2x:
     convertJson2xlsx(args.pathToDir)
 elif args.automatic:
     analyzeHealthData(args.pathToDir)
+elif args.database:
+    exportSqlite(args.pathToDir)
