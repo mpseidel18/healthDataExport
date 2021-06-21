@@ -100,24 +100,28 @@ def convertJson2Csv(PATH):
         df_json = pd.read_json(jsonfile, orient='index')
         df_json.to_csv((str(jsonfile) +'.csv'), index=False)
 
-def exportJsonToXlsxGFit():
-    with open (r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten\derived_com.google.location.sample_com.google.(2).json") as json_file:
+def exportJsonToXlsxGFit(PATH_TO_JSON):
+    with open (PATH_TO_JSON) as json_file:
         data = json.load(json_file)
-    df = pd.json_normalize(data["Data Points"])
+    df_normalized = pd.json_normalize(data["Data Points"])
     index = len(data["Data Points"])
-    # print(index)
-    print(df)
-    df = df["fitValue"][0]
-    columns = len(df)
-    # print(columns)
-    df_final = pd.DataFrame(index=range(0, index), columns=range(0,columns))
-    ################################
-    tmp = []
-    for i in df:
-        newdf = pd.DataFrame(i)
-        tmp.append(newdf["value"][0])
-    df_final.loc[0]=tmp
+    print("Rows: " + str(index))
+    # print(len(df_normalized))
+    columns = len(df_normalized["fitValue"][0])
+    print("Colummns" + str(columns))
+    df_final = pd.DataFrame(index=range(0, index), columns=range(0, columns))
+    for x in range(0,index):
+        values_df = df_normalized["fitValue"][x]
+        # print(df_normalized)
+        ################################
+        tmp = []
+        for i in values_df:
+            newdf = pd.DataFrame(i)
+            tmp.append(newdf["value"][0])
+        df_final.loc[x]=tmp
     print(df_final)
+    df_final.to_excel("extractedData.xlsx")
+    return
         # newdf = pd.DataFrame(df)
         # newdf = newdf["value"][0]
         # df_final.loc[2,1] = newdf
@@ -141,4 +145,3 @@ def exportJsonToXlsxGFit():
     # df.to_excel("newDF.xlsx", index = False)
     # return newJson
     # print(df)
-exportJsonToXlsxGFit()
