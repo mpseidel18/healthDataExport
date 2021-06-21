@@ -1,5 +1,9 @@
+from datetime import date
 import os
+from sqlite3.dbapi2 import paramstyle
+from numpy.lib import index_exp
 import pandas as pd
+from pandas.core.frame import DataFrame
 from pandas.io import json
 from tcxAnalyse import *
 from glob import glob
@@ -8,6 +12,8 @@ from xlsxwriter.workbook import Workbook
 import sqlite3 #Mehrere Imports
 import numpy as np
 from pathlib import Path
+from pandas.io.excel import ExcelWriter
+import json
 FILETYPES = ['tcx', 'json', 'xlsx','csv']
 
 def printData(fname):
@@ -26,7 +32,7 @@ def convertJson2xlsx(fname):
         print(jsonfile)
         df_json = pd.read_json(jsonfile, orient='index')
         df_json.transpose()
-        df_json.to_excel (str(jsonfile) +'.xlsx' )
+        df_json.to_excel(str(jsonfile) +'.xlsx' )
 
 
 def convertCsv2Xlsx(fname):
@@ -41,13 +47,21 @@ def convertCsv2Xlsx(fname):
                 for c, col in enumerate(row):
                     worksheet.write(r, c, col)
         workbook.close()
-def getTCXDataToTxt(fname):
+def getTCXDataToCSV(fname):
     print("Fetching Files...")
     for tcxfile in getFilesRecursive(fname, "tcx"):
-        output = printData(tcxfile)
-        f = open(str(tcxfile) +'.txt' , "a")
-        f.write(output)
-        f.close
+        laps_df, points_df = get_dataframes(tcxfile)
+        points_df.to_csv(str(tcxfile) + 'points' + '.csv')
+        laps_df.to_csv(str(tcxfile) + 'laps' + '.csv')
+    print("Done. Your files are in the folder you've set as args")
+
+
+def getTCXDataToCSVGFit(fname):
+    print("Fetching Files...")
+    for tcxfile in getFilesRecursive(fname, "tcx"):
+        laps_df, points_df = get_dataframes(tcxfile)
+        points_df.to_csv(str(tcxfile) + 'points' + '.csv')
+        laps_df.to_csv(str(tcxfile) + 'laps' + '.csv')
     print("Done. Your files are in the folder you've set as args")
 
 def getLatLongInCsv(fname):
@@ -62,7 +76,7 @@ def getLatLongInCsv(fname):
 def analyzeHealthData(PATH):
     for extension in FILETYPES:
         if extension == 'tcx':
-            getTCXDataToTxt(PATH)
+            getTCXDataToCSV(PATH)
         if extension == 'json':
             convertJson2xlsx(PATH)
         if extension == 'csv':
@@ -79,3 +93,52 @@ def exportSqlite(PATH):
     for x in nparray:
         exportedTable = pd.read_sql_query("SELECT * from " + x + ";", convertDatabase)
         exportedTable.to_excel ("DatabaseExports/" + dbname + "/" + str(x) +'.xlsx' )
+
+def convertJson2Csv(PATH):
+    for jsonfile in getFilesRecursive(PATH, "json"):
+        print(jsonfile)
+        df_json = pd.read_json(jsonfile, orient='index')
+        df_json.to_csv((str(jsonfile) +'.csv'), index=False)
+
+def exportJsonToXlsxGFit():
+    with open (r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten\derived_com.google.location.sample_com.google.(2).json") as json_file:
+        data = json.load(json_file)
+    df = pd.json_normalize(data["Data Points"])
+    index = len(data["Data Points"])
+    # print(index)
+    print(df)
+    df = df["fitValue"][0]
+    columns = len(df)
+    # print(columns)
+    df_final = pd.DataFrame(index=range(0, index), columns=range(0,columns))
+    ################################
+    tmp = []
+    for i in df:
+        newdf = pd.DataFrame(i)
+        tmp.append(newdf["value"][0])
+    df_final.loc[0]=tmp
+    print(df_final)
+        # newdf = pd.DataFrame(df)
+        # newdf = newdf["value"][0]
+        # df_final.loc[2,1] = newdf
+        # print(df_final)
+    
+    # for i in dataPoints:
+    #     if isinstance(i, dict):
+    #         pairs = i.items()
+    #         for key, value in pairs:
+    #             if isinstance(value, list):
+    #                 for i in value:
+    #                     if isinstance(i, dict):
+    #                         print(i.values())
+    # values = []
+    # for result in data["Data Points"]:
+    #     values.append(result[u"fitValue"][0])
+    # print(values)
+    # df = pd.json_normalize(data["Data Points"])
+    # newJson=json.dumps(data["Data Points"])
+    # df = pd.DataFrame(data["Data Points"])
+    # df.to_excel("newDF.xlsx", index = False)
+    # return newJson
+    # print(df)
+exportJsonToXlsxGFit()

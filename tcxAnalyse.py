@@ -10,7 +10,7 @@ import lxml.etree
 import pandas as pd
 import dateutil.parser as dp
 from pandas.io.pytables import format_doc
-pd.set_option('display.max_rows', None)
+# pd.set_option('display.max_rows', None)
 
 NAMESPACES = {
     'ns': 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',

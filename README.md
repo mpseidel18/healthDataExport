@@ -26,7 +26,7 @@ Keep in Mind that this tool search for the given Directory **recursively !**.
 Feel free to try the converts on other vendors or formats!
 
 ## Examples
-Lets say. you want to export some data from your `tcx` file:
+Lets say you want to export some data from your `tcx` file:
 ```
 >> PS C:\Users\[YOUR_USER]\> dir C:\Users\[YOUR_USER]\GoogleFit\Takeout\Google Fit\Aktivitäten
 

@@ -16,7 +16,7 @@ args = parser.parse_args()
 if args.csvgpslist: #Fallunterscheidungen für die einzelnen Inputs. Falls -cl ausgewählt wird, wird getLatLongInCsv ausgeführt.
     getLatLongInCsv(args.pathToDir)
 elif args.c2txt:
-    getTCXDataToTxt(args.pathToDir)
+    getTCXDataToCSV(args.pathToDir)
 elif args.convertc2x:
     convertCsv2Xlsx(args.pathToDir)
 elif args.convertj2x:
