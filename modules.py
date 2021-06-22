@@ -74,7 +74,18 @@ def getTCXDataToCSVGFit(fname):
         laps_df.to_csv("DatabaseExports/" + 'fromTcx/'+ tcxName + "/laps/" + str(tcxName) +'.csv')
     print("Done. Your files are in the folder you've set as args")
 
-#TO-DO:EXPORT
+def exportWorkoutSessions(PATH):
+    for jsonfile in getFilesRecursive(PATH, "json"):
+        with open (jsonfile) as json_file:
+            data = json.load(json_file)
+        jsonName = os.path.splitext(os.path.basename(jsonfile))[0]
+        Path("DatabaseExports/"+ 'fromJson/'+ jsonName + "/").mkdir(parents=True, exist_ok=True)
+        df_norm = pd.json_normalize(data)
+        df_aggregate = pd.DataFrame(df_norm["aggregate"][0])
+        df_meta = df_norm[["fitnessActivity","startTime","endTime","duration"]]
+        df_final = pd.concat([df_aggregate, df_meta]).to_excel("DatabaseExports/" + 'fromJson/'+ jsonName + "/" + str(jsonName) +'.xlsx' )
+        print(df_final)
+
 def getLatLongInCsv(fname):
     print("Fetching Files...")
     print("Creating .csv file from the files in selected folder. \nImport these files to Google MyMaps to get an overview of the locations")
@@ -90,7 +101,7 @@ def exportGoogleTakout(PATH):
 #Alle Daten\GoogleFit\Takeout
     getTCXDataToCSVGFit(PATH + "\Google Fit\Aktivitäten")#\Google Fit\Aktivitäten
     exportJsonToXlsxGFit(PATH + "\Google Fit\Alle Daten")
-    convertJson2xlsx(PATH + "\Google Fit\Alle Sitzungen")
+    exportWorkoutSessions(PATH + "\Google Fit\Alle Sitzungen")
     convertCsv2Xlsx(PATH + "\Google Fit\Tägliche Aktivitätswerte")
 
 def exportSqlite(PATH):
@@ -159,6 +170,7 @@ def exportJsonToXlsxGFit(PATH_TO_JSON):
 
 #exportJsonToXlsxGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
 # convertJson2Csv(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
-# exportGoogleTakout("Alle Daten\GoogleFit\Takeout")
+exportGoogleTakout("Alle Daten\GoogleFit\Takeout")
 # getTCXDataToCSVGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Aktivitäten")
 # exportJsonToXlsxGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
+# exportWorkoutSessions(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Sitzungen")
