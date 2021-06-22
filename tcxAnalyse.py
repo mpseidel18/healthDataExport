@@ -9,41 +9,33 @@ from typing import Dict, Optional, Any, Union, Tuple
 import lxml.etree
 import pandas as pd
 import dateutil.parser as dp
-from pandas.io.pytables import format_doc
+from pandas.io.pytables import format_doc #Mehrere Imports für pandas, parser etc.
 # pd.set_option('display.max_rows', None)
 
 NAMESPACES = {
-    'ns': 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
+    'ns': 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2', #Verschiedene Namespaces, um nach diesen Namen im .tcx File zu suchen
     'ns2': 'http://www.garmin.com/xmlschemas/UserProfile/v2',
     'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2',
     'ns4': 'http://www.garmin.com/xmlschemas/ProfileExtension/v1',
     'ns5': 'http://www.garmin.com/xmlschemas/ActivityGoals/v1'
 }
 
-# The names of the columns we will use in our points DataFrame
-POINTS_COLUMN_NAMES = ['latitude', 'longitude', 'elevation', 'time', 'heart_rate', 'cadence', 'speed', 'lap']
 
-# The names of the columns we will use in our laps DataFrame
-LAPS_COLUMN_NAMES = ['number', 'start_time', 'distance', 'total_time', 'max_speed', 'max_hr', 'avg_hr']
+POINTS_COLUMN_NAMES = ['latitude', 'longitude', 'elevation', 'time', 'heart_rate', 'cadence', 'speed', 'lap'] # Namen der Spalten für den Points Dataframe
+LAPS_COLUMN_NAMES = ['number', 'start_time', 'distance', 'total_time', 'max_speed', 'max_hr', 'avg_hr'] # Namen der Spalten für den Laps Dataframe
 
-def get_tcx_lap_data(lap: lxml.etree._Element) -> Dict[str, Union[float, datetime, timedelta, int]]:
-    """Extract some data from an XML element representing a lap and
-    return it as a dict.
-    """
+def get_tcx_lap_data(lap: lxml.etree._Element) -> Dict[str, Union[float, datetime, timedelta, int]]: #Neue funktion, um aus einem XML Element die Runden herauszulesen. Hier wird ein 
+                                                                                                     #ein Dictionary zurückgegeben
+    data: Dict[str, Union[float, datetime, timedelta, int]] = {} #Neues Dict, die Einträge werden den typen entsprechend konvertiert
     
-    data: Dict[str, Union[float, datetime, timedelta, int]] = {}
+    start_time_str = lap.attrib['StartTime'] #Attribute von StartTime aus dem XML Tree ziehen
+    data['start_time'] = dp.parse(start_time_str) #start_time_str
     
-    # Note that because each element's attributes and text are returned as strings, we need to convert those strings
-    # to the appropriate datatype (datetime, float, int, etc).
-    
-    start_time_str = lap.attrib['StartTime']
-    data['start_time'] = dp.parse(start_time_str)
-    
-    distance_elem = lap.find('ns:DistanceMeters', NAMESPACES)
+    distance_elem = lap.find('ns:DistanceMeters', NAMESPACES) #Sucht nach ns:DistanceMeters im Tree
     if distance_elem is not None:
-        data['distance'] = float(distance_elem.text)
+        data['distance'] = float(distance_elem.text) #Unter distance wird der Output aus dem find Befehl gesichert
     
-    total_time_elem = lap.find('ns:TotalTimeSeconds', NAMESPACES)
+    total_time_elem = lap.find('ns:TotalTimeSeconds', NAMESPACES) #Dies wiederholt sich für jeden Eintrag..
     if total_time_elem is not None:
         data['total_time'] = timedelta(seconds=float(total_time_elem.text))
     
@@ -61,22 +53,17 @@ def get_tcx_lap_data(lap: lxml.etree._Element) -> Dict[str, Union[float, datetim
     
     return data
 
-def get_tcx_point_data(point: lxml.etree._Element) -> Optional[Dict[str, Union[float, int, str, datetime]]]:
-    """Extract some data from an XML element representing a track point
-    and return it as a dict.
-    """
-    
-    data: Dict[str, Union[float, int, str, datetime]] = {}
+def get_tcx_point_data(point: lxml.etree._Element) -> Optional[Dict[str, Union[float, int, str, datetime]]]: #Da TCX Dateien neben Laps auch Points besitzen, wird dasselbe für Points gemacht 
+
+    data: Dict[str, Union[float, int, str, datetime]] = {} #Neues Dict..
     
     position = point.find('ns:Position', NAMESPACES)
     if position is None:
-        # This Trackpoint element has no latitude or longitude data.
-        # For simplicity's sake, we will ignore such points.
         return None
     else:
-        data['latitude'] = float(position.find('ns:LatitudeDegrees', NAMESPACES).text)
-        data['longitude'] = float(position.find('ns:LongitudeDegrees', NAMESPACES).text)
-    time_str = point.find('ns:Time', NAMESPACES).text
+        data['latitude'] = float(position.find('ns:LatitudeDegrees', NAMESPACES).text) #Sichern von Höhen-
+        data['longitude'] = float(position.find('ns:LongitudeDegrees', NAMESPACES).text)#und Breitengrad
+    time_str = point.find('ns:Time', NAMESPACES).text #Und weitere Daten..
     data['time'] = dp.parse(time_str)
         
     elevation_elem = point.find('ns:AltitudeMeters', NAMESPACES)
@@ -93,55 +80,37 @@ def get_tcx_point_data(point: lxml.etree._Element) -> Optional[Dict[str, Union[f
     
     # The ".//" here basically tells lxml to search recursively down the tree for the relevant tag, rather than just the
     # immediate child elements of speed_elem. See https://lxml.de/tutorial.html#elementpath
-    speed_elem = point.find('.//ns3:Speed', NAMESPACES)
+    speed_elem = point.find('.//ns3:Speed', NAMESPACES) #Rekursive suche nach dem Speed Element
     if speed_elem is not None:
         data['speed'] = float(speed_elem.text)
     
     return data
     
 
-def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """Takes the path to a TCX file (as a string) and returns two Pandas
-    DataFrames: one containing data about the laps, and one containing
-    data about the individual points.
-    """
+def get_dataframes(fname: str) -> Tuple[pd.DataFrame, pd.DataFrame]: #Erstelle aus einer TCS File einen pandas Dataframe
     
     tree = lxml.etree.parse(fname)
     root = tree.getroot()
-    activity = root.find('ns:Activities', NAMESPACES)[0]  # Assuming we know there is only one Activity in the TCX file
-                                                          # (or we are only interested in the first one)
-    points_data = []
+    activity = root.find('ns:Activities', NAMESPACES)[0]  #Annahme: Es gibt nur eine Aktivität in dieser TCX File
+    points_data = [] #Erstellen der Listen, welche an den Dataframe später angehängt werden
     laps_data = []
     lap_no = 1
-    for lap in activity.findall('ns:Lap', NAMESPACES):
-        # Get data about the lap itself
-        single_lap_data = get_tcx_lap_data(lap)
-        single_lap_data['number'] = lap_no
-        laps_data.append(single_lap_data)
+    for lap in activity.findall('ns:Lap', NAMESPACES):  #Daten aus der Sektion "Laps" werden geholt..
+        single_lap_data = get_tcx_lap_data(lap) #Aufrufend der voherigen Funktion
+        single_lap_data['number'] = lap_no  #Sichern der Rundennummer, welche mit anderen daten in single_lap_data gesichert wurde
+        laps_data.append(single_lap_data) #Anhängend er Daten an die laps_data Liste
         
         # Get data about the track points in the lap
-        track = lap.find('ns:Track', NAMESPACES) 
-        for point in track.findall('ns:Trackpoint', NAMESPACES):
-            single_point_data = get_tcx_point_data(point)
+        track = lap.find('ns:Track', NAMESPACES)  #Das gleiche gilt für die Sektion "Track"
+        for point in track.findall('ns:Trackpoint', NAMESPACES): #Jeder Trackpoint beinhaltet verschiedene Daten, in diesem wird nach weiteren Daten gesucht
+            single_point_data = get_tcx_point_data(point) #Die Daten werden mithilfe der voherigen Funktion geholt
             if single_point_data:
-                single_point_data['lap'] = lap_no
-                points_data.append(single_point_data)
-        lap_no += 1
+                single_point_data['lap'] = lap_no #Rundennummer wird gesichert
+                points_data.append(single_point_data) #An points_data werden die gesammelten Daten angehängt
+        lap_no += 1 #Diese Schritte werden für jede Runde wiederholt, also wird die Rundenummer hier gezählt
     
-    # Create DataFrames from the data we have collected. If any information is missing from a particular lap or track
-    # point, it will show up as a null value or "NaN" in the DataFrame.
-    
-    laps_df = pd.DataFrame(laps_data, columns=LAPS_COLUMN_NAMES)
-    laps_df.set_index('number', inplace=True)
-    points_df = pd.DataFrame(points_data, columns=POINTS_COLUMN_NAMES)
+    laps_df = pd.DataFrame(laps_data, columns=LAPS_COLUMN_NAMES) #Gesammelte Daten werden in jeweils zwei Dataframes gesichert, hier in laps_df
+    laps_df.set_index('number', inplace=True) #Index setzen
+    points_df = pd.DataFrame(points_data, columns=POINTS_COLUMN_NAMES) #Hier in points_df
     
     return laps_df, points_df
-
-def getLatLong(fname):
-    laps_df, points_df = get_dataframes(fname)
-    df_no_indicies = points_df[['latitude','longitude']].to_string(index=False).replace('   ',',')
-    print(df_no_indicies)
-    return(df_no_indicies)
-def printData(fname):
-    laps_df, points_df = get_dataframes(fname)
-    return "LAPS:" + "\n" + str(laps_df) + "\n" + "POINTS:" + "\n" + str(points_df) +"\n"
