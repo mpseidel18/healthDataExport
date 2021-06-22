@@ -1,7 +1,9 @@
 # HealthDataInterpret
 
 This tool is use to analyze and export data from various health-data vendors. This tool is only tested with the Google Takeout export.
+How it Works:
 
+The application has several commands which export most of the files that match. This is accomplished by loading these files into a pands Dataframe, which then gets converted and exported. Besides that, this tool also features a fully automatic export service for the Google Takout Service. All the Files will be read and be exported in `xlxs` or `csv`. When using this export, other export functions are used. These functions are made for the Takout Service!
 Usage:
 ```bash
  analyseTakeout.py [-h] [-xt | -cl | -cx | -jx | -a | -db] pathToDir
@@ -17,7 +19,7 @@ optional arguments:
   -cl, --csvgpslist  Exports the Lat/Long Data in from your .tcx File into a .csv File.
   -cx, --convertc2x  Converts .csv to .xlsx files.
   -jx, --convertj2x  Converts .json to .xlsx files.
-  -a, --automatic    analyzes the full tree recursivly and trys to convert the data in readbale Data.
+  -a, --automatic    exports every Data from the Google Takout Folder. And only the Google Takeout Folder (!). 
   -db, --database    Exports tables from a target Database. The Database must contain sqlite_schema. You need to specify the whole path to the databse!
 ```
 Keep in Mind that this tool search for the given Directory **recursively !**. 
