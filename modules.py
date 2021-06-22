@@ -170,7 +170,7 @@ def exportJsonToXlsxGFit(PATH_TO_JSON):
 
 #exportJsonToXlsxGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
 # convertJson2Csv(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
-exportGoogleTakout("Alle Daten\GoogleFit\Takeout")
+#exportGoogleTakout("Alle Daten\GoogleFit\Takeout")
 # getTCXDataToCSVGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Aktivitäten")
 # exportJsonToXlsxGFit(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Daten")
 # exportWorkoutSessions(r"Alle Daten\GoogleFit\Takeout\Google Fit\Alle Sitzungen")
