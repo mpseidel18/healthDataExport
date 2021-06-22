@@ -7,7 +7,7 @@ group.add_argument("-xc", "--c2csv", help="Exports your .tcx Data in a .csv File
 group.add_argument("-cl", "--csvgpslist", help="Exports the Lat/Long Data in from your .tcx File into a .csv File.", action="store_true")
 group.add_argument("-cx", "--convertc2x", help="Converts .csv to .xlsx files.", action="store_true")
 group.add_argument("-jx", "--convertj2x", help="Converts .json to .xlsx files.", action="store_true")
-group.add_argument("-a", "--automatic", help="analyzes the full tree recursivly and trys to convert the data in readbale Data.", action="store_true")
+group.add_argument("-a", "--automatic", help="analyzes the full tree recursivly and trys to convert the data in readbale Data. Works ONLY on Google Takout.", action="store_true")
 group.add_argument("-db", "--database", help="Exports tables from a target Database. The Database must contain sqlite_schema. \n You need to specify the whole path to the databse!", action="store_true")
 group.add_argument("-f", "--fitval", help="Gets the fitVal entries from a Google Takeout .json. \n You need to specify the whole path to the databse!", action="store_true")
 
@@ -23,7 +23,7 @@ elif args.convertc2x:
 elif args.convertj2x:
     convertJson2xlsx(args.pathToDir)
 elif args.automatic:
-    analyzeHealthData(args.pathToDir)
+    exportGoogleTakout(args.pathToDir)
 elif args.database:
     exportSqlite(args.pathToDir)
 elif args.fitval:
